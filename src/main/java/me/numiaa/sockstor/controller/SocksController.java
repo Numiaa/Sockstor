@@ -1,20 +1,22 @@
 package me.numiaa.sockstor.controller;
 
+import lombok.RequiredArgsConstructor;
 import me.numiaa.sockstor.domain.Operation;
 import me.numiaa.sockstor.domain.Sockstor;
 import me.numiaa.sockstor.service.SocksService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "api/socks")
+@RequiredArgsConstructor
 public class SocksController {
 
-    @Autowired
-    SocksService socksService;
+    private final SocksService socksService;
 
     @GetMapping
     public String getSocksQuantity(@RequestParam String color,
@@ -24,8 +26,10 @@ public class SocksController {
     }
 
     @PostMapping(path="income", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addSocks(@RequestBody @Valid Sockstor income) {
+    public ResponseEntity addSocks(@RequestBody @Valid Sockstor income) {
+
         socksService.addSocks(income);
+        return new ResponseEntity("Socks added successfully", HttpStatus.OK);
     }
 
     @PostMapping(path = "outcome", consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -1,9 +1,9 @@
 package me.numiaa.sockstor.service;
 
+import lombok.RequiredArgsConstructor;
 import me.numiaa.sockstor.domain.Operation;
 import me.numiaa.sockstor.domain.Sockstor;
 import me.numiaa.sockstor.repo.SockstorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
+@RequiredArgsConstructor
 public class SocksService {
 
-    @Autowired
-    SockstorRepository sockstorRepository;
+    private final SockstorRepository sockstorRepository;
 
     public Long getSocksQuantity(String color, Operation operation, Byte cottonPart) {
         color = color.toLowerCase(Locale.ROOT);
